@@ -18,8 +18,10 @@ export default function Navbar() {
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "Biodatas", href: "/biodatas" },
+    { name: "AboutUs", href: "/AboutUs" },
     { name: "Success Stories", href: "/stories" },
     { name: "Contact", href: "/contact" },
+    { name: "Dashboard", href: "/dashboard" },
   ];
 
   return (

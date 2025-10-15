@@ -1,73 +1,121 @@
 "use client";
-import { FaFacebookF, FaInstagram, FaTwitter, FaLinkedinIn } from "react-icons/fa";
+import Image from "next/image";
+import React from "react";
+import { FaFacebookF, FaTwitter, FaPinterestP, FaArrowUp } from "react-icons/fa";
 
-export default function Footer() {
+const Footer = () => {
   return (
-    <footer className="relative bg-[#F8F4EB] py-24 px-6 md:px-12 overflow-hidden font-sans">
-      {/* Optional subtle gradient overlay for depth */}
-      <div className="absolute inset-0 pointer-events-none bg-gradient-to-tr from-white/20 via-transparent to-white/10"></div>
+    <footer className="relative bg-stone-900 text-gray-300 pt-20 pb-10 overflow-hidden">
+      {/* Left Floral Decoration */}
+      <div className="absolute bottom-0 left-0 w-[280px] h-[220px] opacity-90 pointer-events-none z-0">
+        <Image
+          src="/images/footer-shape-1 (1).png"
+          alt="Decorative Flower Left"
+          fill
+          className="object-contain"
+        />
+      </div>
 
-      <div className="relative max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-16 z-10">
-        {/* Left: Logo + Info */}
-        <div className="flex-1 flex flex-col gap-5">
-          <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-wide">
-            TogetherEver
-          </h2>
-          <p className="text-gray-700 text-base md:text-lg leading-relaxed max-w-sm">
-            TogetherEver is a premium matrimony platform helping singles find their perfect match. Join our community today.
-          </p>
-          <div className="flex gap-4 mt-6">
-            {[FaFacebookF, FaInstagram, FaTwitter, FaLinkedinIn].map((Icon, idx) => (
+      {/* Right Floral Decoration */}
+      <div className="absolute top-0 right-0 w-[180px] h-[280px] opacity-90 pointer-events-none z-0">
+        <Image
+          src="/images/footer-shape-2.png"
+          alt="Decorative Flower Right"
+          fill
+          className="object-contain"
+        />
+      </div>
+
+      {/* Footer Main Content */}
+      <div className="container mx-auto px-6 md:px-10 lg:px-20 relative z-10 grid grid-cols-1 md:grid-cols-3 gap-16 text-center md:text-left">
+        {/* Useful Links Section */}
+        <div>
+          <h3 className="text-3xl md:text-4xl font-serif font-bold mb-8 text-white tracking-wider uppercase">
+            Useful Links
+          </h3>
+          <div className="grid grid-cols-2 gap-x-10 gap-y-3 text-sm md:text-base">
+            {[
+              ["About", "/about"],
+              ["Our Story", "/our-story"],
+              ["RSVP Form", "/rsvp"],
+              ["Gallery", "/gallery"],
+              ["Pricing", "/pricing"],
+              ["News & Blog", "/blog"],
+            ].map(([text, href]) => (
               <a
-                key={idx}
-                href="#"
-                className="w-11 h-11 flex items-center justify-center rounded-full bg-white shadow-md text-gray-700 hover:text-white hover:bg-gradient-to-r hover:from-indigo-500 hover:to-blue-500 transition-all duration-300"
+                key={text}
+                href={href}
+                className="hover:text-amber-500 transition duration-300"
               >
-                <Icon className="text-lg md:text-xl" />
+                {text}
               </a>
             ))}
           </div>
         </div>
 
-        {/* Center: Newsletter Subscription */}
-        <div className="flex-1 flex flex-col items-center gap-4">
-          <h3 className="text-xl md:text-2xl font-semibold text-gray-900">
-            Subscribe to Our Newsletter
+        {/* Brand Section */}
+        <div className="flex flex-col items-center justify-center">
+          <h3 className="text-5xl md:text-6xl font-serif font-extrabold mb-6 text-amber-500 tracking-widest">
+            Habibi
           </h3>
-          <div className="flex w-full max-w-md shadow-lg rounded-full overflow-hidden bg-white">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="flex-1 px-6 py-4 text-gray-900 placeholder-gray-400 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-400 rounded-l-full transition-all duration-300"
-            />
-            <button className="bg-gradient-to-r from-indigo-500 to-blue-500 text-white px-8 py-4 font-semibold hover:scale-105 transform transition-transform duration-300 rounded-r-full">
-              Subscribe
-            </button>
-          </div>
-          <p className="text-gray-600 text-sm mt-2 text-center md:text-left">
-            We respect your privacy. Unsubscribe anytime.
+          <p className="text-base md:text-lg text-gray-400 max-w-sm mb-8 italic leading-relaxed">
+            We can’t wait to see all of our beloved friends and relatives at our
+            wedding.
           </p>
-        </div>
-
-        {/* Right: Quick Links */}
-        <div className="flex-1 flex flex-col md:items-end gap-4">
-          <h3 className="text-xl md:text-2xl font-semibold text-gray-900 mb-2">Quick Links</h3>
-          <ul className="flex flex-col gap-3 text-gray-700 text-base md:text-lg">
-            {["Home", "About", "Success Stories", "Contact", "Privacy Policy", "Terms of Service"].map((link, idx) => (
-              <li key={idx}>
-                <a className="hover:text-indigo-500 hover:underline transition-colors duration-300" href="#">
-                  {link}
-                </a>
-              </li>
+          <div className="flex space-x-5">
+            {[
+              { Icon: FaFacebookF, href: "https://facebook.com" },
+              { Icon: FaTwitter, href: "https://twitter.com" },
+              { Icon: FaPinterestP, href: "https://pinterest.com" },
+            ].map(({ Icon, href }) => (
+              <a
+                key={href}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 flex items-center justify-center border border-gray-500 text-gray-400 rounded-full hover:border-amber-500 hover:text-amber-500 transition duration-300"
+              >
+                <Icon size={16} />
+              </a>
             ))}
-          </ul>
+          </div>
+        </div>
+
+        {/* Contact Section */}
+        <div>
+          <h3 className="text-3xl md:text-4xl font-serif font-bold mb-8 text-white tracking-wider uppercase">
+            Contact
+          </h3>
+          <div className="space-y-3 text-sm md:text-base">
+            <p className="hover:text-amber-500 transition duration-300 cursor-pointer">
+              mail@habibitheme.com
+            </p>
+            <address className="not-italic leading-relaxed text-gray-400">
+              4517 Washington Ave.<br />
+              Manchester, Kentucky 39495
+            </address>
+          </div>
         </div>
       </div>
 
-      {/* Bottom */}
-      <div className="relative mt-20 border-t border-gray-300 pt-6 text-center text-gray-600 text-sm md:text-base z-10">
-        &copy; {new Date().getFullYear()} TogetherEver. All rights reserved.
+      {/* Divider */}
+      <div className="mt-20 border-t border-gray-700"></div>
+
+      {/* Bottom Bar */}
+      <div className="pt-6 text-center text-xs md:text-sm text-gray-500">
+        © {new Date().getFullYear()} <span className="text-amber-500 font-semibold">Habibi</span> | All rights reserved.
       </div>
+
+      {/* Scroll to Top Button */}
+      <button
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        className="fixed bottom-6 right-6 bg-amber-500 hover:bg-amber-600 text-white p-3 rounded-full shadow-lg transition duration-300 z-20"
+        title="Go to top"
+      >
+        <FaArrowUp size={16} />
+      </button>
     </footer>
   );
-}
+};
+
+export default Footer;
