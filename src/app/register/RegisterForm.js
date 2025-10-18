@@ -1,39 +1,39 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { FaUser, FaEnvelope, FaLock, FaImage } from "react-icons/fa";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function RegisterForm() {
-  const [imageUrl, setImageUrl] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+
+
+
   const handleRegister = async (e) => {
     e.preventDefault();
     setLoading(true);
+
+    const name = e.target.name.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    const profileImage = e.target.profileImage.value;
 
     try {
       const res = await fetch("/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password, profileImage: imageUrl }),
+        body: JSON.stringify({ name, email, password, profileImage }),
       });
 
       const data = await res.json();
 
       if (res.ok) {
         toast.success("🎉 Registered successfully! You can login now.", { duration: 4000 });
-        setName("");
-        setEmail("");
-        setPassword("");
-        setImageUrl("");
-        router.push('/login')
-
+        e.target.reset(); // form reset
+        router.push('/login');
       } else {
         toast.error(data.message || "❌ Registration failed.", { duration: 4000 });
       }
@@ -45,8 +45,13 @@ export default function RegisterForm() {
     setLoading(false);
   };
 
+
+
+
   return (
-    <section className="relative w-full min-h-screen bg-cover bg-center flex items-center justify-center" style={{ backgroundImage: "url('https://i.postimg.cc/1tdZL8Hy/bg-3.png')" }}>
+    <section className="relative w-full min-h-screen bg-cover bg-center flex items-center justify-center" 
+      style={{ backgroundImage: "url('https://i.postimg.cc/1tdZL8Hy/bg-3.png')" }}
+    >
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
@@ -55,16 +60,15 @@ export default function RegisterForm() {
       >
         <h2 className="text-3xl font-bold text-gray-800 text-center mb-8">Create an Account</h2>
 
-        <form className="flex flex-col gap-6" onSubmit={handleRegister}>
+        <form onSubmit={handleRegister} className="flex flex-col gap-6">
           {/* Name */}
           <div className="relative">
             <FaUser className="absolute left-3 top-3 text-gray-500" />
             <input
               type="text"
+              name="name"
               placeholder="Full Name"
               className="w-full pl-10 pr-4 py-3 rounded-xl bg-[#faf7f5] text-gray-800 border border-[#e5d9d3]"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
               required
             />
           </div>
@@ -74,10 +78,9 @@ export default function RegisterForm() {
             <FaEnvelope className="absolute left-3 top-3 text-gray-500" />
             <input
               type="email"
+              name="email"
               placeholder="Email Address"
               className="w-full pl-10 pr-4 py-3 rounded-xl bg-[#faf7f5] text-gray-800 border border-[#e5d9d3]"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
@@ -87,10 +90,9 @@ export default function RegisterForm() {
             <FaLock className="absolute left-3 top-3 text-gray-500" />
             <input
               type="password"
+              name="password"
               placeholder="Password"
               className="w-full pl-10 pr-4 py-3 rounded-xl bg-[#faf7f5] text-gray-800 border border-[#e5d9d3]"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
@@ -100,9 +102,8 @@ export default function RegisterForm() {
             <FaImage className="absolute left-3 top-3 text-gray-500" />
             <input
               type="url"
+              name="profileImage"
               placeholder="Profile Image URL"
-              value={imageUrl}
-              onChange={(e) => setImageUrl(e.target.value)}
               className="w-full pl-10 pr-4 py-3 rounded-xl bg-[#faf7f5] text-gray-800 border border-[#e5d9d3]"
             />
           </div>

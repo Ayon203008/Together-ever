@@ -1,6 +1,7 @@
+import AboutSection from '@/components/About/About'
 import Faq from '@/components/FreqentlyAskedQuestion/faq'
 import Hero from '@/components/Hero/Hero'
-import PremiumMembership from '@/components/premiumMembership/premiumMembership'
+import PremiumMembers from '@/components/prepmiumMember/PremiumMembers'
 import Stats from '@/components/StatsSection/stats'
 import OurStory from '@/components/Story/OurStory'
 import Testimonial from '@/components/Testimonial/page'
@@ -12,9 +13,9 @@ export default function page() {
     <div>
 
       <Hero></Hero>
-    <PremiumMembership></PremiumMembership>
-    <OurStory></OurStory>
-
+      <AboutSection></AboutSection>
+      <PremiumMembers></PremiumMembers>
+      <OurStory></OurStory>
       <Testimonial></Testimonial>
       <Stats></Stats>
       <Faq></Faq>

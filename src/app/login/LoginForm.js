@@ -1,4 +1,5 @@
 "use client";
+
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -6,13 +7,14 @@ import { FaEnvelope, FaLock } from "react-icons/fa";
 import { motion } from "framer-motion";
 
 export default function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
+
+    const email = e.target.email.value.trim();
+    const password = e.target.password.value.trim();
 
     const res = await signIn("credentials", {
       redirect: false,
@@ -22,15 +24,15 @@ export default function LoginForm() {
 
     setLoading(false);
 
-    if (res?.error) {
-      toast.error(res.error);
+    if (!res.ok) {
+      toast.error("Invalid email or password");
     } else {
-      toast.success("Logged in successfully!");
-      // Redirect to dashboard
+      toast.success("Logged in successfully");
       window.location.href = "/";
     }
   };
 
+  // ✅ return অবশ্যই component function এর সরাসরি body তে
   return (
     <section className="relative w-full h-screen bg-cover bg-center flex items-center justify-center"
       style={{ backgroundImage: "url('https://i.postimg.cc/1tdZL8Hy/bg-3.png')" }}
@@ -49,10 +51,10 @@ export default function LoginForm() {
             <FaEnvelope className="absolute left-3 top-3 text-gray-500" />
             <input
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              name="email"
               placeholder="Email Address"
               className="w-full pl-10 pr-4 py-3 rounded-xl bg-[#faf7f5] text-gray-800 placeholder-gray-400 border border-[#e5d9d3] focus:outline-none focus:ring-2 focus:ring-rose-300 focus:border-transparent"
+              required
             />
           </div>
 
@@ -60,10 +62,10 @@ export default function LoginForm() {
             <FaLock className="absolute left-3 top-3 text-gray-500" />
             <input
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              name="password"
               placeholder="Password"
               className="w-full pl-10 pr-4 py-3 rounded-xl bg-[#faf7f5] text-gray-800 placeholder-gray-400 border border-[#e5d9d3] focus:outline-none focus:ring-2 focus:ring-rose-300 focus:border-transparent"
+              required
             />
           </div>
 

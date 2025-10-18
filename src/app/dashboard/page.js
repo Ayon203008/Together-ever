@@ -9,6 +9,7 @@ import {
   FaRing,
 } from "react-icons/fa";
 import { MdFavorite } from "react-icons/md";
+import ProtectedRoute from "@/components/ProtectedRoute/ProtectedRoute";
 
 export default function DashboardPage() {
   const cards = [
@@ -45,6 +46,7 @@ export default function DashboardPage() {
   ];
 
   return (
+    
     <div>
       <h1 className="text-3xl font-extrabold text-gray-900 mb-10 bg-gradient-to-r from-blue-600 to-pink-500 bg-clip-text text-transparent">
         Dashboard
@@ -76,5 +78,6 @@ export default function DashboardPage() {
         ))}
       </div>
     </div>
+    
   );
 }

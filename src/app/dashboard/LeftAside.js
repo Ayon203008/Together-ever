@@ -20,7 +20,7 @@ export default function LeftAside() {
 
   const menuItems = [
     { name: "Home", icon: <FaHome />, href: "/" },
-    { name: "Edit Biodata", icon: <FaUserEdit />, href: "/dashboard/editbiodata" },
+    { name: "Create Biodata", icon: <FaUserEdit />, href: "/dashboard/createbiodata" },
     { name: "View Biodata", icon: <FaRegUserCircle />, href: "/dashboard/viewbiodata" },
     { name: "Favourites", icon: <MdFavorite />, href: "/dashboard/favouritebiodata" },
     { name: "Got Married", icon: <FaRing />, href: "/dashboard/gotmarried" },

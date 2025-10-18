@@ -1,34 +1,45 @@
 import clientPromise from "@/lib/mongodb";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
+import { NextResponse } from "next/server";
 
 export async function POST(req) {
   try {
+    const { name, email, password, profileImage } = await req.json();
     const client = await clientPromise;
     const db = client.db("Together-ever");
-    const { name, email, password, profileImage } = await req.json();
+    const user = db.collection("users");
 
-    if (!name || !email || !password || !profileImage) {
-      return new Response(JSON.stringify({ message: "All fields are required" }), { status: 400 });
-    }
-
-    const existingUser = await db.collection("user").findOne({ email });
+    // Check if email already exists
+    const existingUser = await user.findOne({ email });
     if (existingUser) {
-      return new Response(JSON.stringify({ message: "Email already registered" }), { status: 400 });
+      return NextResponse.json(
+        { error: "Email already exists" },
+        { status: 400 }
+      );
     }
 
+    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    await db.collection("users").insertOne({
+    // ✅ Create new user with default role = "user"
+    const newUser = await user.insertOne({
       name,
       email,
       password: hashedPassword,
-      profileImage,
+      image: profileImage || null,
+      role: "user", // 🔥 Default role set here
       createdAt: new Date(),
     });
 
-    return new Response(JSON.stringify({ message: "User registered successfully" }), { status: 201 });
+    return NextResponse.json(
+      { success: true, user: newUser },
+      { status: 201 }
+    );
   } catch (error) {
-    console.error(error);
-    return new Response(JSON.stringify({ message: "Internal Server Error" }), { status: 500 });
+    console.error("Error creating user:", error);
+    return NextResponse.json(
+      { error: "Server Error" },
+      { status: 500 }
+    );
   }
 }
